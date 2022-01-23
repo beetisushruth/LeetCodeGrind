@@ -7,8 +7,9 @@ class Solution {
         while(j < curr.size() && getNextNumber(curr.get(j)) <= high) {
             List<Integer> temp = new ArrayList<>();
             while(j < curr.size() && getNextNumber(curr.get(j)) != 0 && getNextNumber(curr.get(j)) <= high)             {
-                temp.add(getNextNumber(curr.get(j)));
-                if(getNextNumber(curr.get(j)) >= low) ans.add(getNextNumber(curr.get(j)));
+                int nextNumber = getNextNumber(curr.get(j));
+                temp.add(nextNumber);
+                if(nextNumber >= low) ans.add(nextNumber);
                 j++;
             }
             curr = temp;
@@ -16,7 +17,6 @@ class Solution {
         }
         return ans;
     }
-    // 12 23 34 45 56 67 78 89 123 234 345 567 678 789 
     
     public int getNextNumber(int i) {
         if(i%10 == 9) return 0;
