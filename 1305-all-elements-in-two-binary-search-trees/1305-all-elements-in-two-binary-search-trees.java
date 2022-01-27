@@ -19,8 +19,12 @@ class Solution {
         List<Integer> arr2 = new ArrayList<>();
         preorder(root1, arr1);
         preorder(root2, arr2);
-        List<Integer> arr = merge(arr1, arr2);
-        return arr;
+         if (root1 == null) {
+            return arr2;
+        } else if (root2 == null) {
+            return arr1;
+        }
+        return merge(arr1, arr2);
     }
     
     public void preorder(TreeNode node, List<Integer> arr) {
