@@ -8,8 +8,6 @@ class Solution {
         long[] nums34 = new long[c*d];
         fillArray(nums1, nums2, nums12);
         fillArray(nums3, nums4, nums34);
-        Arrays.sort(nums12);
-        Arrays.sort(nums34);
         return findCount(nums12, nums34);
     }
     
@@ -39,17 +37,5 @@ class Solution {
             }
         }
         return count;
-    }
-    
-    public int findZeroes(long[] a, long[] b) {
-        int count = 0;
-        int count1 = 0, count2 = 0;
-        for(int i=0; i<a.length; i++) {
-            if(a[i] == 0) count1++;
-        }
-        for(int j=0; j<a.length; j++) {
-            if(b[j] == 0) count2++;
-        }
-        return count1*count2;
     }
 }
