@@ -1,11 +1,12 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        int n =  (int) Math.ceil(nums.length/2);
-        for(int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-            if(map.get(num) > n) return num;
+        int maj = nums[0];
+        int sum = 1;
+        for(int i = 1; i<nums.length; i++) {
+            if(sum == 0) maj = nums[i];
+            if(nums[i] != maj) sum -= 1;
+            else sum += 1;
         }
-        return 0;
+        return maj;
     }
 }
