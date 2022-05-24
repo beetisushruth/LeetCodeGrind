@@ -1,29 +1,19 @@
 class Solution {
-    public int shortestDistance(String[] wordsDict, String word1, String word2) {
-        Stack<String> st = new Stack<>();
-        int ans = wordsDict.length;
-        int count = 0;
-        for(int i=0; i<wordsDict.length; i++) {
-            String word = wordsDict[i];
-            if(st.isEmpty() && (word.equals(word1) || word.equals(word2))) {
-                st.add(word);
-                count = 1;
-            } else if(!st.isEmpty() && st.peek().equals(word1) && word.equals(word2)) {
-                ans = Math.min(ans, count);
-                st.pop();
-                st.add(word2);
-                count = 1;
-            } else if(!st.isEmpty() && st.peek().equals(word2) && word.equals(word1)) {
-                ans = Math.min(ans, count);
-                st.pop();
-                st.add(word1);
-                count = 1;
-            } else if(!st.isEmpty() && st.peek().equals(word) && (word.equals(word1) || word.equals(word2))) {
-                count = 1;
-            } else {
-                count++;
+    public int shortestDistance(String[] words, String word1, String word2) {
+        int i1 = -1, i2 = -1;
+        int minDistance = words.length;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(word1)) {
+                i1 = i;
+            } else if (words[i].equals(word2)) {
+                i2 = i;
+            }
+
+            if (i1 != -1 && i2 != -1) {
+                minDistance = Math.min(minDistance, Math.abs(i1 - i2));
+                if(minDistance == 1) return 1;
             }
         }
-        return ans;
+        return minDistance;
     }
 }
