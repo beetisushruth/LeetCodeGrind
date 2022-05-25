@@ -17,8 +17,9 @@ class Solution {
         int size = sub.size();
         int left = 0;
         int right = size - 1;
+        int mid = (left + right)/2;
         while(left < right) {
-            int mid = (left + right)/2;
+            mid = (left + right)/2;
             if(sub.get(mid) >= num) {
                 right = mid;
             } else {
