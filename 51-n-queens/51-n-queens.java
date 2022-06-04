@@ -9,6 +9,7 @@ class Solution {
     public void backtrack(int n, String[][] matrix, int x, int y, int count, List<List<String>> ans) {
         if(count == n) {
             ans.add(convert(matrix, n));
+            return;
         }
         for(int i=x; i<n; i++) {
             for(int j=y; j<n; j++) {
