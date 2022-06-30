@@ -7,14 +7,10 @@ class Solution {
         Stack<Integer> st = new Stack<>();
         st.add(nums2[0]);
         for(int i=0; i<nums2.length; i++) {
-            if(st.isEmpty()) {
-                st.add(nums2[i]);
-            } else {
-                while(!st.isEmpty() && st.peek() < nums2[i]) {
-                    map.put(st.pop(), nums2[i]);
-                }
-                st.add(nums2[i]);
+            while(!st.isEmpty() && st.peek() < nums2[i]) {
+                map.put(st.pop(), nums2[i]);
             }
+            st.add(nums2[i]);
         }
         for(int i=0; i<nums1.length; i++) {
             nums1[i] = map.containsKey(nums1[i]) ? map.get(nums1[i]) : -1;
