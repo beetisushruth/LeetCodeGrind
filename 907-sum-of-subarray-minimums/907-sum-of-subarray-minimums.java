@@ -1,41 +1,27 @@
 class Solution {
     public int sumSubarrayMins(int[] arr) {
-        int n=arr.length;
-        int [] prevsmaller=new int[n];
-        int [] nextsmaller=new int[n];
-        final int mod=1000000007;
-        Stack<Integer> stack=new Stack<>();
-        for(int i=0;i<n;i++){
-            prevsmaller[i]=-1;
-            nextsmaller[i]=n;
-        }
-        // finding the next smaller element
-        for(int i=n-1;i>=0;i--){
-            while(!stack.isEmpty() && arr[i]<=arr[stack.peek()]){
-                stack.pop();
+        Stack<Integer> st = new Stack<>();
+        int MOD = (int) Math.pow(10, 9) + 7;
+        int sum = 0;
+        for(int i=0; i<arr.length; i++) {
+            while(!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                int index = st.pop();
+                int left = (st.isEmpty()) ? -1 : st.peek();
+                long count = (index - left)*(i - index)%MOD;
+                long product = count*arr[index]%MOD;
+                sum = (int)(product + sum)%MOD;
             }
-            if(!stack.isEmpty()){
-                nextsmaller[i]=stack.peek();
-            }
-            stack.push(i);
+            st.add(i);
         }
-        stack.clear();
-        // finding the previous smaller element
-        for(int i=0;i<n;i++){
-            while(!stack.isEmpty() && arr[i]<arr[stack.peek()]){  // here we havent used = sign because it was failing for case [71,55,82,55]. In case of duplicate numbers we consider the first in occurence number as our answer
-                stack.pop();
-            }
-            if(!stack.isEmpty()){
-                prevsmaller[i]=stack.peek();
-            }
-            stack.push(i);
+        int right = arr.length;
+        while(!st.empty()) {
+            int index = st.pop();
+            int left = (st.isEmpty()) ? -1 : st.peek();
+            long count = (index - left)*(right - index)%MOD;
+            long product = count*arr[index]%MOD;
+            sum = (int)(product + sum)%MOD;
+            // System.out.println(arr[index]+" "+count);
         }
-        long res=0;
-        for(int i=0;i<n;i++){
-            long left= (long)i -prevsmaller[i];
-            long right=nextsmaller[i]-(long)i;
-            res=(res+ (arr[i]*left*right)%mod)%mod;
-        }
-        return (int) res;
+        return sum;
     }
 }
