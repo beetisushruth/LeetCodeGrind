@@ -1,15 +1,16 @@
 class Solution {
     public int jump(int[] nums) {
-        int n = nums.length;
-        int[] dp = new int[n];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        for(int i=1; i<n; i++) {
-            for(int j=i-1; j>=0; j--) {
-                int steps = nums[j] + j;
-                if(steps >= i) dp[i] = Math.min(dp[j] + 1, dp[i]);
+        int jumps = 0, currentJumpEnd = 0, farthest = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            // we continuously find the how far we can reach in the current jump
+            farthest = Math.max(farthest, i + nums[i]);
+            // if we have come to the end of the current jump,
+            // we need to make another jump
+            if (i == currentJumpEnd) {
+                jumps++;
+                currentJumpEnd = farthest;
             }
         }
-        return dp[n - 1];
+        return jumps;
     }
 }
