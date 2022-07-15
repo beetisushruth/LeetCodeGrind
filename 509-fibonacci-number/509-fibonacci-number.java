@@ -1,12 +1,14 @@
 class Solution {
     public int fib(int n) {
-        if(n < 2) return n;
-        int num1 = 0; int num2 = 1;
-        for(int i=2; i<=n; i++) {
-            int temp = num2;
-            num2 = num1 + num2;
-            num1 = temp;
-        }
-        return num2;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 0); map.put(1, 1);
+        return recurse(n, map);
     }
+    
+    public int recurse(int n, Map<Integer, Integer> map) {
+        if(map.containsKey(n)) return map.get(n);
+        int ans = recurse(n - 1, map) + recurse(n - 2, map);
+        map.put(n, ans);
+        return ans;
+    } 
 }
