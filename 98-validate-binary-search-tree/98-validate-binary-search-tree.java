@@ -15,18 +15,11 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        List<Integer> arr = new ArrayList<>();
-        recurse(root, arr);
-        for(int i=1; i<arr.size(); i++) {
-            if(arr.get(i - 1) >= arr.get(i)) return false;
-        }
-        return true;
+        return recurse(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }   
     
-    public void recurse(TreeNode node, List<Integer> arr) {
-        if(node == null) return;
-        recurse(node.left, arr);
-        arr.add(node.val);
-        recurse(node.right, arr);
+    public boolean recurse(TreeNode node, long a, long b) {
+        if(node == null) return true;
+        return node.val > a && node.val < b && recurse(node.left, a, Math.min(node.val, b)) && recurse(node.right, Math.max(node.val, a), b);
     }
 }
