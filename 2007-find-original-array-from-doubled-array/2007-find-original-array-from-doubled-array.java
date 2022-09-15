@@ -1,33 +1,26 @@
 class Solution {
+    
     public int[] findOriginalArray(int[] changed) {
-        if (changed.length % 2 == 1) return new int[0];
-        
-        int[] counts = new int[100001];
-        
-        for (int val : changed) counts[val]++;
-        
-        int[] orig = new int[changed.length / 2];
-        int curr = 0;
-        
-        if (counts[0] % 2 == 0) {
-            curr = counts[0] / 2;            
-        } else {
-            return new int[0];
+        int n = changed.length;
+        if(n%2 != 0) return new int[0];
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int num : changed) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        
-        for (int i = 1; i <= 100000; i++) {
-            if (counts[i] > 0) {
-                if (i > 50000 || counts[i*2] < counts[i] || counts[i] + curr > orig.length) {
-                    return new int[0];
+        Arrays.sort(changed);
+        int[] arr = new int[n/2];
+        int j = 0;
+        for(int num : changed) {
+            if(map.get(num) > 0) {
+                map.put(num, map.get(num) - 1);
+                if(map.containsKey(num*2) && map.get(2*num) > 0) {
+                    map.put(num*2, map.get(num*2) - 1);
+                    arr[j++] = num;
                 } else {
-                    for (int j = 0; j < counts[i]; j++) {
-                        counts[i*2]--;
-                        orig[curr++] = i;
-                    }
+                    return new int[0];
                 }
             }
         }
-        
-        return orig;
+        return arr;
     }
 }
