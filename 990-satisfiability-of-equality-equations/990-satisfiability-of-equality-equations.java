@@ -24,8 +24,10 @@ class Solution {
 
 class DisjointSet {
     int[] arr;
+    int[] rank;
     public DisjointSet(int n) {
         arr = new int[n];
+        rank = new int[n];
         for(int i=0; i<n; i++) arr[i] = i;
     }
     
@@ -39,6 +41,13 @@ class DisjointSet {
     public void union(int node1, int node2) {
         int parent1 = find(node1);
         int parent2 = find(node2);
-        arr[parent2] = parent1; 
+        if(rank[parent1] < rank[parent2]) {
+            arr[parent1] = parent2;
+        } else if(rank[parent1] > rank[parent2]) {
+            arr[parent2] = parent1;
+        } else {
+            arr[parent2] = parent1; 
+            rank[parent1]++;
+        }
     }
 }
