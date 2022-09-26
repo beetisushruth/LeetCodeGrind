@@ -8,7 +8,6 @@ class Solution {
         for(int i=0; i<n; i++) parent[i] = i;
         for(int i=0; i<edges.length; i++) {
             int[] edge = edges[i];
-            // System.out.println(edge[0]+" "+parent[edge[0]]+" "+edge[1]+" "+parent[edge[1]]);
             if(find(edge[0]) == find(edge[1])) return false;
             union(edge[0], edge[1]);
         }
