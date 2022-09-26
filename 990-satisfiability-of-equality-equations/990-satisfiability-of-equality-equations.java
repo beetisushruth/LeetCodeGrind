@@ -31,7 +31,7 @@ class DisjointSet {
     
     public int find(int node) {
         if(arr[node] != node) {
-            return find(arr[node]);
+            return arr[node] = find(arr[node]);
         }
         return arr[node];
     }
