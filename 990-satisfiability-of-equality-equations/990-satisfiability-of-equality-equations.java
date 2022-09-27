@@ -1,53 +1,52 @@
 class Solution {
     public boolean equationsPossible(String[] equations) {
-        DisjointSet ds = new DisjointSet(26);
-        for(int i=0; i<equations.length; i++) {
-            String equation = equations[i];
-            if(equation.contains("==")) {
-                int x = equation.charAt(0) - 'a';
-                int y = equation.charAt(3) - 'a';
-                ds.union(x, y);
+        UnionFind uf = new UnionFind(26);
+        for(String s : equations) {
+            if(s.contains("==")) {
+                int x = s.charAt(0) - 'a';
+                int y = s.charAt(3) - 'a';
+                uf.union(x, y);
             }
         }
-        
-        for(int i=0; i<equations.length; i++) {
-            String equation = equations[i];
-            if(equation.contains("!=")) {
-                int x = equation.charAt(0) - 'a';
-                int y = equation.charAt(3) - 'a';
-                if(ds.find(x) == ds.find(y)) return false;
+        for(String s : equations) {
+            if(s.contains("!=")) {
+                int x = s.charAt(0) - 'a';
+                int y = s.charAt(3) - 'a';
+                if(uf.find(x) == uf.find(y)) return false;
             }
         }
         return true;
     }
 }
 
-class DisjointSet {
-    int[] arr;
-    int[] rank;
-    public DisjointSet(int n) {
-        arr = new int[n];
-        rank = new int[n];
-        for(int i=0; i<n; i++) arr[i] = i;
-    }
-    
-    public int find(int node) {
-        if(arr[node] != node) {
-            return arr[node] = find(arr[node]);
-        }
-        return arr[node];
-    }
-    
-    public void union(int node1, int node2) {
-        int parent1 = find(node1);
-        int parent2 = find(node2);
-        if(rank[parent1] < rank[parent2]) {
-            arr[parent1] = parent2;
-        } else if(rank[parent1] > rank[parent2]) {
-            arr[parent2] = parent1;
-        } else {
-            arr[parent2] = parent1; 
-            rank[parent1]++;
-        }
-    }
+
+public class UnionFind {
+	int[] parent;
+	int[] rank;
+	
+	public UnionFind(int n) {
+		this.parent = new int[n];
+		this.rank = new int[n];
+		for(int i=0; i<n; i++) this.parent[i] = i;
+	}
+	
+	public void union(int node1, int node2) {
+		int parent1 = find(node1);
+		int parent2 = find(node2);
+		if(rank[parent1] < rank[parent2]) {
+			parent[parent1] = parent2; 
+		} else if(rank[parent1] > rank[parent2]) {
+			parent[parent2] = parent1;
+		} else {
+			parent[parent2] = parent1;
+			rank[parent1]++;
+		}
+	}
+	
+	public int find(int node) {
+		if(parent[node] != node) {
+			return parent[node] = find(parent[node]);
+		}
+		return parent[node];
+	}
 }
