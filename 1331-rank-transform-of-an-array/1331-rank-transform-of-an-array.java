@@ -7,10 +7,10 @@ class Solution {
             sortedArr[i] = arr[i];
         }
         Arrays.sort(sortedArr);
-        int rank = 1 ;
-        for(int i=0; i < n ; i++){
-            map.put(sortedArr[i], rank);
-            if( i < n-1 && sortedArr[i] != sortedArr[i+1]){
+        int rank = 0;
+        for(int i=0; i < n ; i++) {
+            if(!map.containsKey(sortedArr[i])) {
+                map.put(sortedArr[i], rank + 1);
                 rank++;
             }
         }
